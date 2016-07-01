@@ -1,9 +1,23 @@
 package rnatranscription;
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 public class RnaTranscriptionTest {
 
+	@Test
+	public void test_ofDna_InvalidInput_NullString_ThrowsException() {
+		try {
+			RnaTranscription.ofDna( null );
+			fail("Supposed to catch NullPointerException");
+		} catch ( NullPointerException npe ) {
+			
+		} catch ( Exception e ) {
+			fail("Expected to catch NullPointerException");
+		}
+	}
+	
     @Test
     public void testRnaTranscriptionOfEmptyDnaIsEmptyRna() {
         Assert.assertEquals("", RnaTranscription.ofDna(""));
@@ -29,6 +43,11 @@ public class RnaTranscriptionTest {
         Assert.assertEquals("U", RnaTranscription.ofDna("A"));
     }
 
+    @Test
+    public void test_ofDna_InvalidInput_InvalidCharacters_ReturnsExpectedResponse() {
+    	Assert.assertEquals("UGCACCAGAAUU", RnaTranscription.ofDna("ACGTGFFFFFFFFGTCTTAA"));
+    }
+    
     @Test
     public void testRnaTranscription() {
         Assert.assertEquals("UGCACCAGAAUU", RnaTranscription.ofDna("ACGTGGTCTTAA"));
